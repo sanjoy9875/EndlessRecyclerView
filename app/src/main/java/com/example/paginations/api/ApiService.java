@@ -12,11 +12,10 @@ import static com.example.paginations.api.ApiUtilities.API_KEY;
 
 public interface ApiService {
 
-    @Headers("Authorization: Client-ID"+API_KEY)
-    @GET("/photos/")
+    @GET("/photos/?client_id=-p7BgTkFB0GoeiosUSi5AZeH7XbogFrpi_c1wMfzpDg")
     Call<List<ImageModel>> getImages(
             @Query("page") int page,
-            @Query("per_page") int perPage
+            @Query("per_page") int per_page
     );
 
 }

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.paginations.api.ApiUtilities;
@@ -83,15 +84,17 @@ public class MainActivity extends AppCompatActivity {
 
         isLoading = true;
 
-        ApiUtilities.getApiService().getImages(page,30)
+        ApiUtilities.getApiService().getImages(page,pageSize)
                 .enqueue(new Callback<List<ImageModel>>() {
                     @Override
                     public void onResponse(Call<List<ImageModel>> call, Response<List<ImageModel>> response) {
+                        Log.d("TAG",response.body().toString());
                         if (response.body()!=null){
                             list.addAll(response.body());
                             adapter.notifyDataSetChanged();
 
                         }
+                        Log.d("TAG","error1 =>");
                         isLoading = false;
                         progressDialog.dismiss();
 
@@ -106,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<List<ImageModel>> call, Throwable t) {
                         progressDialog.dismiss();
+                        Log.d("TAG","error =>"+t.getMessage());
                         Toast.makeText((MainActivity.this), "error! "+t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
